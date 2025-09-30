@@ -34,7 +34,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: $${{matrix.python-version}}
+        python-version: ${{matrix.python-version}}
 
     - name: Install dependencies
       run: |
@@ -51,7 +51,12 @@ jobs:
         coverage run -m pytest app/modules/ --ignore-glob='*selenium*'
         coverage xml 
         python-codacy-coverage -r coverage.xml
-      env:
+
+    - name: Security audit with pip-audit
+    run: |
+        pip install pip-audit
+        pip-audit || true
+    env:
         FLASK_ENV: testing
         MARIADB_HOSTNAME: 127.0.0.1
         MARIADB_PORT: 3306
