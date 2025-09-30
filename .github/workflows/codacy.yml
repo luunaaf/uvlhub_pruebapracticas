@@ -53,7 +53,7 @@ jobs:
         python-codacy-coverage -r coverage.xml
 
     - name: Security audit with pip-audit
-    run: |
+      run: |
         pip install pip-audit
         pip-audit || true
     env:
